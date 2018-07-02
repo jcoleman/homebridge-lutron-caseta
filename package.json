@@ -1,0 +1,43 @@
+{
+  "name": "homebridge-lutron-caseta",
+  "version": "1.0.0",
+  "description": "Homebridge plugin for integration with the Lutron Caseta Smart Bridge Pro",
+  "main": "src/main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcoleman/homebridge-lutron-caseta.git"
+  },
+  "keywords": [
+    "lutron",
+    "caseta",
+    "homebridge",
+    "homebridge-plugin",
+    "home-automation",
+    "smartbridge"
+  ],
+  "author": "James Coleman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jcoleman/homebridge-lutron-caseta/issues"
+  },
+  "homepage": "https://github.com/jcoleman/homebridge-lutron-caseta#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "jest": "^23.0"
+  },
+  "dependencies": {
+    "homebridge": ">=0.4.0"
+  },
+  "jest": {
+    "testRegex": "__tests__\\/.+_spec\\.jsx?$"
+  }
+}
