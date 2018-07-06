@@ -1477,9 +1477,9 @@ handlebars@^4.0.3:
   optionalDependencies:
     uglify-js "^2.6"
 
-hap-nodejs@0.4.46:
-  version "0.4.46"
-  resolved "https://registry.yarnpkg.com/hap-nodejs/-/hap-nodejs-0.4.46.tgz#0e979a4aa0344abf148b61d1c48f4b2f022a3cf9"
+hap-nodejs@0.4.47:
+  version "0.4.47"
+  resolved "https://registry.yarnpkg.com/hap-nodejs/-/hap-nodejs-0.4.47.tgz#77004b0e521d373cc20285d610d3ba619e2b7342"
   dependencies:
     bonjour-hap "^3.5.1"
     buffer-shims "^1.0.0"
@@ -1560,13 +1560,13 @@ home-or-tmp@^2.0.0:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.1"
 
-homebridge@>=0.4.0:
-  version "0.4.43"
-  resolved "https://registry.yarnpkg.com/homebridge/-/homebridge-0.4.43.tgz#46f51f92857e7c1a7b6cd9fbb7d462b569683ca3"
+homebridge@>=0.4.44:
+  version "0.4.44"
+  resolved "https://registry.yarnpkg.com/homebridge/-/homebridge-0.4.44.tgz#16a2375705e96740ac8ba5bfbbb571a9b61c7811"
   dependencies:
     chalk "^1.1.1"
     commander "2.8.1"
-    hap-nodejs "0.4.46"
+    hap-nodejs "0.4.47"
     node-persist "^0.0.8"
     qrcode-terminal "^0.11.0"
     semver "5.0.3"
