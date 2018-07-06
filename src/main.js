@@ -1,3 +1,5 @@
+import LutronCasetaPlatform from "./lutron_caseta_platform.js"
+
 let Accessory, Service, Characteristic, UUIDGen;
 
 module.exports = function(homebridge) {
@@ -6,18 +8,7 @@ module.exports = function(homebridge) {
   Characteristic = homebridge.hap.Characteristic;
   UUIDGen = homebridge.hap.uuid;
 
-  homebridge.registerPlatform("homebridge-lutron-caseta", "Lutron Caseta Smart Bridge Pro", HomebridgeLutronCaseta, true);
+  homebridge.registerPlatform("homebridge-lutron-caseta", "Lutron Caseta Smart Bridge Pro", LutronCasetaPlatform, true);
 }
 
-class HomebridgeLutronCaseta {
-	constructor(log, config, api) {
-		if (!config) {
-      log("No config found; exiting.");
-      return;
-    }
 
-    this.log = log;
-    this.config = config;
-    this.HomebridgeAPI = api;
-  }
-}
