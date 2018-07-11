@@ -1,11 +1,12 @@
-import net from 'net';
+import net from "net";
+import EventEmitter from "events";
 
 const States = {
   AWAITING_LOGIN: 1,
   LOGGED_IN: 2,
 };
 
-class CasetaBridgeConnection {
+class CasetaBridgeConnection extends EventEmitter {
   static connectionDefaults() {
     return {
       host: null,
@@ -17,6 +18,8 @@ class CasetaBridgeConnection {
   }
 
   constructor(log, connectionOpts) {
+    super();
+
     this.log = log;
 
     this.connectionOpts = Object.assign({}, CasetaBridgeConnection.connectionDefaults(), connectionOpts);
@@ -56,7 +59,10 @@ class CasetaBridgeConnection {
           }
           break;
         case States.LOGGED_IN:
-
+          const args = line.split(",");
+          if (args[0][0] === "~") {
+            this.emit("monitorMessageReceived", args[1], args.slice(2));
+          }
           break;
       }
     }

@@ -13,7 +13,10 @@ class LutronCasetaPlatform {
     this.config = config;
     this.homebridgeAPI = api;
 
-    this.bridgeConnection = new CasetaBridgeConnection(this.log, config.bridgeConnection);
+    this.bridgeConnection = new CasetaBridgeConnection(this.log, this.config.bridgeConnection);
+    this.bridgeConnection.on("monitorMessageReceived", (integrationID, commandFields) => {
+      this._dispatchMonitorMessage(integrationID, commandFields);
+    });
 
     this.accessoriesByIntegrationID = {};
 
@@ -43,12 +46,17 @@ class LutronCasetaPlatform {
       needToRegisterPlatformAccessory = true;
     }
 
-    const accessory = new LutronAccessory(this.log, cachedPlatformAccessory, this.homebridgeAPI);
+    const accessory = LutronAccessory.accessoryForType(accessoryConfig.type, this.log, cachedPlatformAccessory, this.homebridgeAPI);
     this._trackAccessory(accessory);
 
     if (needToRegisterPlatformAccessory) {
       this.homebridgeAPI.registerPlatformAccessories(Main.PluginName, Main.PlatformName, [cachedPlatformAccessory]);
     }
+  }
+
+  _dispatchMonitorMessage(integrationID, commandFields) {
+    const accessory = this.accessoriesByIntegrationID[integrationID];
+    accessory._dispatchMonitorMessage(commandFields);
   }
 }
 

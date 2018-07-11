@@ -174,6 +174,27 @@ describe("CasetaBridgeConnection", () => {
           return expectationsChain;
         });
       });
+
+      describe("state = LOGGED_IN", () => {
+        beforeEach(() => {
+          serverConnection.state = FakeServerConnectionStates.LOGGED_IN;
+          bridgeConnection.state = CasetaBridgeConnectionStates.LOGGED_IN;
+        });
+
+        it("emits parsed monitoring messages", () => {
+          expect.assertions(2);
+
+          serverSocket.write("~DEVICE,2,3,4");
+
+          return new Promise((resolve) => {
+            bridgeConnection.on("monitorMessageReceived", (integrationID, commandFields) => {
+              expect(integrationID).toEqual("2");
+              expect(commandFields).toEqual(["3", "4"]);
+              resolve();
+            });
+          });
+        });
+      });
     });
   });
 });
