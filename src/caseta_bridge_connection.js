@@ -54,6 +54,7 @@ class CasetaBridgeConnection extends EventEmitter {
             this.socket.write(`${this.connectionOpts.password}\r\n`);
           } else if (/^GNET>\s*/.test(line)) {
             this.state = States.LOGGED_IN;
+            this.emit("loggedIn");
           } else {
 
           }

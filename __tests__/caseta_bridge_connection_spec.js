@@ -173,6 +173,14 @@ describe("CasetaBridgeConnection", () => {
 
           return expectationsChain;
         });
+
+        it("emits logged in messages", () => {
+          const expectationPromise = new Promise((resolve) => {
+            bridgeConnection.on("loggedIn", resolve);
+          });
+
+          return expectationPromise;
+        });
       });
 
       describe("state = LOGGED_IN", () => {

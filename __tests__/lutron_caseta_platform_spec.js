@@ -164,22 +164,14 @@ describe("LutronCasetaPlatform", () => {
 
       characteristic.setValue = jest.fn();
 
-      // TODO: find better way of waiting for login
-      let previousState = platform.bridgeConnection.state;
-      platform.bridgeConnection.socket.on("data", () => {
-        if (previousState !== platform.bridgeConnection.state && platform.bridgeConnection.state === CasetaBridgeConnectionStates.LOGGED_IN) {
-          previousState = platform.bridgeConnection.state;
-          serverSocket.write("~DEVICE,2,4,3");
-        }
+      platform.bridgeConnection.on("loggedIn", () => {
+        serverSocket.write("~DEVICE,2,4,3");
       });
 
-      // TODO: implement test and then _dispatchMonitorMessage
       return new Promise((resolve) => {
         platform.bridgeConnection.on("monitorMessageReceived", () => {
-          setTimeout(() => { // TODO: maybe not necessary.
-            expect(characteristic.setValue.mock.calls).toEqual([[1]]);
-            resolve();
-          }, 0);
+          expect(characteristic.setValue.mock.calls).toEqual([[1]]);
+          resolve();
         });
       });
     });
