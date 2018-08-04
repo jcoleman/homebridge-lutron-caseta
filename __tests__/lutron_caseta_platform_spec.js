@@ -113,11 +113,18 @@ describe("LutronCasetaPlatform", () => {
 
     describe("type = PICO-REMOTE", () => {
       // TODO: handle multiple remote types.
-      let accessory;
-      beforeEach(() => {
+      it("builds an accessory with stateless programmable switch services", () => {
+        expect.assertions(1);
+
         const accessoriesRegisteredPromise = new Promise((resolve) => {
           homebridge.once("registerPlatformAccessories", (accessories) => {
-            accessory = platform.accessoriesByIntegrationID["2"];
+            const accessory = platform.accessoriesByIntegrationID["2"];
+            const switchServices = accessory.platformAccessory.services.filter(
+              s => s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
+            );
+
+            expect(switchServices.length).toEqual(2);
+
             resolve();
           });
         });
@@ -127,15 +134,28 @@ describe("LutronCasetaPlatform", () => {
         return accessoriesRegisteredPromise;
       });
 
-      it("builds an accessory with stateless programmable switch services", () => {
-        const switchServices = accessory.platformAccessory.services.filter(
-          s => s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
-        );
+      it("updates services on cached platform accessories", () => {
+        const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+        cachedPlatformAccessory.context.config = {
+          type: "PICO-REMOTE",
+          integrationID: 2,
+          name: "bogus",
+        };
+        const bogusService = new homebridge.hap.Service.StatelessProgrammableSwitch("Switch bogus", "2");
+        cachedPlatformAccessory.addService(bogusService);
+        platform.configureAccessory(cachedPlatformAccessory);
 
-        expect(switchServices.length).toEqual(2);
+        homebridge.emit("didFinishLaunching");
+
+        const accessory = platform.accessoriesByIntegrationID["2"];
+        const switchNames = accessory.platformAccessory.services.filter(
+          s => s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
+        ).map(s => s.displayName);
+
+        expect(switchNames.length).toEqual(2);
+        expect(switchNames).toEqual(["Switch 2", "Switch 4"]);
       });
     });
-
   });
 
   describe("with fake server", () => {

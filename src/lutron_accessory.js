@@ -28,11 +28,27 @@ class LutronPicoRemoteAccessory extends LutronAccessory {
 	constructor(log, platformAccessory, api) {
     super(log, platformAccessory, api);
 
+    const StatelessProgrammableSwitch = this.homebridgeAPI.hap.Service.StatelessProgrammableSwitch;
     this.switchServicesByButtonNumber = ["2", "4"].reduce((acc, number) => {
       // TODO: more logical switch names.
-      const service = new this.homebridgeAPI.hap.Service.StatelessProgrammableSwitch(`Switch ${number}`, number);
+      const displayName = `Switch ${number}`;
+
+      let existingService = this.platformAccessory.getServiceByUUIDAndSubType(StatelessProgrammableSwitch, number);
+      if (existingService && existingService.displayName != displayName) {
+        this.platformAccessory.removeService(existingService);
+        existingService = null;
+      }
+
+      let service;
+      if (existingService) {
+        service = existingService;
+      } else {
+        service = new this.homebridgeAPI.hap.Service.StatelessProgrammableSwitch(displayName, number);
+        this.platformAccessory.addService(service);
+      }
+
       acc[number] = service;
-      this.platformAccessory.addService(service);
+
       return acc;
     }, {});
   }
