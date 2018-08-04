@@ -30,7 +30,7 @@ class LutronCasetaPlatform {
 
   // Homebridge uses this API to load accessories from its cache.
   configureAccessory(platformAccessory) {
-    this._addAccessoryFromConfig(platformAccessory.context.config);
+    this._addAccessoryFromConfig(platformAccessory.context.config, platformAccessory);
   }
 
   _trackAccessory(accessory) {
@@ -38,16 +38,23 @@ class LutronCasetaPlatform {
   }
 
   _addAccessoryFromConfig(accessoryConfig, cachedPlatformAccessory=null) {
+    const existingAccessory = this.accessoriesByIntegrationID[accessoryConfig.integrationID];
     let needToRegisterPlatformAccessory = false;
     if (cachedPlatformAccessory === null) {
-      const uuid = this.homebridgeAPI.hap.uuid.generate(accessoryConfig.name);
-      cachedPlatformAccessory = new this.homebridgeAPI.platformAccessory(accessoryConfig.name, uuid);
+      if (existingAccessory) {
+        cachedPlatformAccessory = existingAccessory.platformAccessory;
+      } else {
+        const uuid = this.homebridgeAPI.hap.uuid.generate(accessoryConfig.name);
+        cachedPlatformAccessory = new this.homebridgeAPI.platformAccessory(accessoryConfig.name, uuid);
+        needToRegisterPlatformAccessory = true;
+      }
       cachedPlatformAccessory.context.config = accessoryConfig;
-      needToRegisterPlatformAccessory = true;
     }
 
-    const accessory = LutronAccessory.accessoryForType(accessoryConfig.type, this.log, cachedPlatformAccessory, this.homebridgeAPI);
-    this._trackAccessory(accessory);
+    if (existingAccessory === undefined) {
+      const accessory = LutronAccessory.accessoryForType(accessoryConfig.type, this.log, cachedPlatformAccessory, this.homebridgeAPI);
+      this._trackAccessory(accessory);
+    }
 
     if (needToRegisterPlatformAccessory) {
       this.homebridgeAPI.registerPlatformAccessories(Main.PluginName, Main.PlatformName, [cachedPlatformAccessory]);

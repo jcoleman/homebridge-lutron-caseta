@@ -81,6 +81,36 @@ describe("LutronCasetaPlatform", () => {
       expect(platform.accessoriesByIntegrationID["2"]).toBeInstanceOf(LutronAccessory);
     });
 
+    it("doesn't attempt to re-add cached accessories from config", () => {
+      const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+      cachedPlatformAccessory.context.config = {
+        type: "PICO-REMOTE",
+        integrationID: 2,
+        name: "test remote",
+      };
+      platform.configureAccessory(cachedPlatformAccessory);
+
+      homebridge.registerPlatformAccessories = jest.fn();
+
+      homebridge.emit("didFinishLaunching");
+
+      expect(homebridge.registerPlatformAccessories.mock.calls).toEqual([]);
+    });
+
+    it("updates cached accessories from config", () => {
+      const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+      cachedPlatformAccessory.context.config = {
+        type: "PICO-REMOTE",
+        integrationID: 2,
+        name: "bogus",
+      };
+      platform.configureAccessory(cachedPlatformAccessory);
+
+      homebridge.emit("didFinishLaunching");
+
+      expect(cachedPlatformAccessory.context.config.name).toEqual("test remote");
+    });
+
     describe("type = PICO-REMOTE", () => {
       // TODO: handle multiple remote types.
       let accessory;
