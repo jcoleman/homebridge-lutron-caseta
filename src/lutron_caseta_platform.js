@@ -1,6 +1,6 @@
-import * as Main from "../src/main.js"
+import * as Main from "./main.js"
 import CasetaBridgeConnection from "./caseta_bridge_connection.js"
-import LutronAccessory from "../src/lutron_accessory.js";
+import LutronAccessory from "./lutron_accessory.js";
 
 class LutronCasetaPlatform {
 	constructor(log, config, api) {

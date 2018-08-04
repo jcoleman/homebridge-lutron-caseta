@@ -2,11 +2,12 @@
   "name": "homebridge-lutron-caseta",
   "version": "1.0.0",
   "description": "Homebridge plugin for integration with the Lutron Caseta Smart Bridge Pro",
-  "main": "src/main.js",
+  "main": "lib/main.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
+    "build": "babel src -d lib",
     "test": "jest"
   },
   "repository": {
