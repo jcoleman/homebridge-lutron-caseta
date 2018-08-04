@@ -162,7 +162,7 @@ describe("LutronCasetaPlatform", () => {
       const service = accessory.platformAccessory.getServiceByUUIDAndSubType(homebridge.hap.Service.StatelessProgrammableSwitch, "4");
       const characteristic = service.getCharacteristic(homebridge.hap.Characteristic.ProgrammableSwitchEvent);
 
-      characteristic.setValue = jest.fn();
+      accessory._dispatchMonitorMessage = jest.fn();
 
       platform.bridgeConnection.on("loggedIn", () => {
         serverSocket.write("~DEVICE,2,4,3");
@@ -170,7 +170,7 @@ describe("LutronCasetaPlatform", () => {
 
       return new Promise((resolve) => {
         platform.bridgeConnection.on("monitorMessageReceived", () => {
-          expect(characteristic.setValue.mock.calls).toEqual([[1]]);
+          expect(accessory._dispatchMonitorMessage.mock.calls).toEqual([[["4", "3"]]]);
           resolve();
         });
       });

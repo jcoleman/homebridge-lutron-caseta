@@ -19,6 +19,11 @@ class LutronAccessory {
   }
 }
 
+const PicoRemoteButtonStates = {
+  BUTTON_DOWN: "3",
+  BUTTON_UP: "4",
+};
+
 class LutronPicoRemoteAccessory extends LutronAccessory {
 	constructor(log, platformAccessory, api) {
     super(log, platformAccessory, api);
@@ -33,10 +38,14 @@ class LutronPicoRemoteAccessory extends LutronAccessory {
   }
 
   _dispatchMonitorMessage(commandFields) {
-    const service = this.switchServicesByButtonNumber[commandFields[0]];
-    const characteristic = service.getCharacteristic(this.homebridgeAPI.hap.Characteristic.ProgrammableSwitchEvent);
-    characteristic.setValue(1);
+    const [serviceNumber, buttonState] = commandFields;
+    if (buttonState == PicoRemoteButtonStates.BUTTON_UP) {
+      const service = this.switchServicesByButtonNumber[serviceNumber];
+      const characteristic = service.getCharacteristic(this.homebridgeAPI.hap.Characteristic.ProgrammableSwitchEvent);
+      characteristic.setValue(1);
+    }
   }
 }
 
 export default LutronAccessory;
+export {PicoRemoteButtonStates};
