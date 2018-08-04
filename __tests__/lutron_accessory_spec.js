@@ -94,7 +94,7 @@ describe("LutronCasetaPlatform", () => {
 
     return new Promise((resolve) => {
       platform.bridgeConnection.on("monitorMessageReceived", () => {
-        expect(characteristic.setValue.mock.calls).toEqual([[1]]);
+        expect(characteristic.setValue.mock.calls).toEqual([[0]]);
         resolve();
       });
     });

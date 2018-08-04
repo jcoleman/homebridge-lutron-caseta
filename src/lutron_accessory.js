@@ -58,7 +58,7 @@ class LutronPicoRemoteAccessory extends LutronAccessory {
     if (buttonState == PicoRemoteButtonStates.BUTTON_UP) {
       const service = this.switchServicesByButtonNumber[serviceNumber];
       const characteristic = service.getCharacteristic(this.homebridgeAPI.hap.Characteristic.ProgrammableSwitchEvent);
-      characteristic.setValue(1);
+      characteristic.setValue(0);
     }
   }
 }
