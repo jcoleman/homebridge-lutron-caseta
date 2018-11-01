@@ -1,5 +1,7 @@
 # Homebridge Lutron Caseta
 
+[![Build Status](https://semaphoreci.com/api/v1/jcoleman/homebridge-lutron-caseta/branches/master/badge.svg)](https://semaphoreci.com/jcoleman/homebridge-lutron-caseta)
+
 tl;dr: A Homebridge plugin for integration with the Lutron Caseta Smart Bridge Pro.
 
 Primary motivation:
