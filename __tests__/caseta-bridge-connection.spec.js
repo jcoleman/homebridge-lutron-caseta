@@ -4,7 +4,6 @@ const {
   ConnectionState: FakeServerConnectionState,
   FakeServer
 } = require("./fake-server");
-const { TestHelper } = require("./test-helper");
 const {
   ConnectionState,
   CasetaBridgeConnection
@@ -86,104 +85,70 @@ describe("CasetaBridgeConnection", () => {
 
     describe("#receiveData", () => {
       describe("state = AWAITING_LOGIN", () => {
-        it("logs in", () => {
+        it("logs in", async () => {
           expect.assertions(8 * 2 + 1 + 1);
+          await new Promise(resolve => bridgeSocket.once("data", resolve));
+          expect(messages.length).toEqual(1);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "bridge_connection",
+            data: "login: \r\n"
+          });
 
-          const expectationsChain = Promise.resolve()
-            .then(TestHelper.chainedWaitForMessageOnSocket(bridgeSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(1);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "bridge_connection",
-                  data: "login: \r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(serverSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(2);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "server_connection",
-                  data: "lutron\r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(bridgeSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(3);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "bridge_connection",
-                  data: "password: \r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(serverSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(4);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "server_connection",
-                  data: "integration\r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(bridgeSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(5);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "bridge_connection",
-                  data: "login: \r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(serverSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(6);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "server_connection",
-                  data: "lutron\r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(bridgeSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(7);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "bridge_connection",
-                  data: "password: \r\n"
-                });
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(serverSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(messages.length).toEqual(8);
-                expect(messages[messages.length - 1]).toEqual({
-                  receiver: "server_connection",
-                  data: "integration\r\n"
-                });
+          await new Promise(resolve => serverSocket.once("data", resolve));
+          expect(messages.length).toEqual(2);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "server_connection",
+            data: "lutron\r\n"
+          });
 
-                expect(serverConnection.state).toEqual(
-                  FakeServerConnectionState.LOGGED_IN
-                );
-              })
-            )
-            .then(TestHelper.chainedWaitForMessageOnSocket(bridgeSocket))
-            .then(
-              TestHelper.chainedWrapWithPromise(() => {
-                expect(bridgeConnection.state).toEqual(
-                  ConnectionState.LOGGED_IN
-                );
-              })
-            );
+          await new Promise(resolve => bridgeSocket.once("data", resolve));
+          expect(messages.length).toEqual(3);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "bridge_connection",
+            data: "password: \r\n"
+          });
 
-          return expectationsChain;
+          await new Promise(resolve => serverSocket.once("data", resolve));
+          expect(messages.length).toEqual(4);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "server_connection",
+            data: "integration\r\n"
+          });
+
+          await new Promise(resolve => bridgeSocket.once("data", resolve));
+          expect(messages.length).toEqual(5);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "bridge_connection",
+            data: "login: \r\n"
+          });
+
+          await new Promise(resolve => serverSocket.once("data", resolve));
+          expect(messages.length).toEqual(6);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "server_connection",
+            data: "lutron\r\n"
+          });
+
+          await new Promise(resolve => bridgeSocket.once("data", resolve));
+          expect(messages.length).toEqual(7);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "bridge_connection",
+            data: "password: \r\n"
+          });
+
+          await new Promise(resolve => serverSocket.once("data", resolve));
+          expect(messages.length).toEqual(8);
+          expect(messages[messages.length - 1]).toEqual({
+            receiver: "server_connection",
+            data: "integration\r\n"
+          });
+
+          expect(serverConnection.state).toEqual(
+            FakeServerConnectionState.LOGGED_IN
+          );
+
+          await new Promise(resolve => bridgeSocket.once("data", resolve));
+          expect(bridgeConnection.state).toEqual(ConnectionState.LOGGED_IN);
         });
 
         it("emits logged in messages", () => {

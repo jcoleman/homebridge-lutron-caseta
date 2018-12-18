@@ -2,7 +2,7 @@
 const { API } = require("homebridge");
 const { FakeServer } = require("./fake-server");
 const { LutronCasetaPlatform } = require("../src/lutron-caseta-platform");
-const { ButtonState, LutronAccessory } = require("../src/lutron-accessory");
+const { ButtonState } = require("../src/lutron-accessory");
 
 describe("LutronCasetaPlatform", () => {
   let homebridge, platform, server, serverSocket;
