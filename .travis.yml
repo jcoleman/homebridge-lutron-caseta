@@ -10,20 +10,19 @@ before_script:
 after_script:
   - codecov
 deploy:
-  matrix:
-    - provider: script
-      skip_cleanup: true
-      script: npm run _version
-      on:
-        branch: master
-        repo: smockle/homebridge-lutron-caseta
-        tags: false
-    - provider: npm
-      skip_cleanup: true
-      email: bot@smockle.com
-      api_key:
-        secure: fM3OsE4hZdzV/LfzrRvaCsF2CwhCXP6Tt0BX62i57x7dsASqjvV/+eNCeCRIOCoVCL2duj0ZY0bWNvXzoyQfULFytrL+EL3TsCikpGUmf+BD4HMHg+Xa91IJ/wNBg+La6y1MRerF885anm+KTvVlJR93d4Y3FNN09vVnw0l4f488afd8gbqMi5fnvKVPPQeuK7MRy1htddj7/mJCuzvIBGj3/KUkYBcmoxs/bDHI2z1zUUUtjCA47GMCXoiMHHMqZ2VDwlb256Su+LAkRQ2fxaqH7wKv48Qct6cVinMzy/3az4glGSEYslhuYDnJ2MHUirYK1K/n2m7kz04N7jxCZ9J0klTdcVJYeMj/gSKdEFZ2S3JJA73WPvfs6c0OsXHnW4Xj9P1i2rQUb6K9TXBCAn3T/mAkJ8rTHYMCfNOJPmu5+oyaJyxAtJnC+k9w7aQNZYuIBUJUTajmntPaF6HWG9B5DuS2/S/B32G3PEhjzujF4+zwWiox/ZDXyu7xmS1kPlVqAZxlNJzrmQFZMwM27xkESu4LY/bkQdZ1LZNd6U+hz4UerEDL209vCmBpvCLGZFXgeQaweRzWdgh/WywKOXkge8Pcs4u+IgjhVTPPtdTTf2VMKHeC0N/nP/Exa03cuyWwTPDP51FnP5Rif5ncKrY9jABwK1rLa8+TWmhB6Jw=
-      on:
-        branch: master
-        repo: smockle/homebridge-lutron-caseta
-        tags: false
+  - provider: script
+    skip_cleanup: true
+    script: npm run _version
+    on:
+      branch: master
+      repo: smockle/homebridge-lutron-caseta
+      tags: false
+  - provider: npm
+    skip_cleanup: true
+    email: bot@smockle.com
+    api_key:
+      secure: fM3OsE4hZdzV/LfzrRvaCsF2CwhCXP6Tt0BX62i57x7dsASqjvV/+eNCeCRIOCoVCL2duj0ZY0bWNvXzoyQfULFytrL+EL3TsCikpGUmf+BD4HMHg+Xa91IJ/wNBg+La6y1MRerF885anm+KTvVlJR93d4Y3FNN09vVnw0l4f488afd8gbqMi5fnvKVPPQeuK7MRy1htddj7/mJCuzvIBGj3/KUkYBcmoxs/bDHI2z1zUUUtjCA47GMCXoiMHHMqZ2VDwlb256Su+LAkRQ2fxaqH7wKv48Qct6cVinMzy/3az4glGSEYslhuYDnJ2MHUirYK1K/n2m7kz04N7jxCZ9J0klTdcVJYeMj/gSKdEFZ2S3JJA73WPvfs6c0OsXHnW4Xj9P1i2rQUb6K9TXBCAn3T/mAkJ8rTHYMCfNOJPmu5+oyaJyxAtJnC+k9w7aQNZYuIBUJUTajmntPaF6HWG9B5DuS2/S/B32G3PEhjzujF4+zwWiox/ZDXyu7xmS1kPlVqAZxlNJzrmQFZMwM27xkESu4LY/bkQdZ1LZNd6U+hz4UerEDL209vCmBpvCLGZFXgeQaweRzWdgh/WywKOXkge8Pcs4u+IgjhVTPPtdTTf2VMKHeC0N/nP/Exa03cuyWwTPDP51FnP5Rif5ncKrY9jABwK1rLa8+TWmhB6Jw=
+    on:
+      branch: master
+      repo: smockle/homebridge-lutron-caseta
+      tags: false
