@@ -50,8 +50,5 @@
   "jest": {
     "testRegex": "__tests__\\/.+_spec\\.jsx?$",
     "collectCoverage": true
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
