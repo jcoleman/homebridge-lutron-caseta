@@ -1,6 +1,6 @@
 {
   "name": "@smockle/homebridge-lutron-caseta",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Homebridge plugin for integration with the Lutron Caseta Smart Bridge Pro",
   "main": "lib/main.js",
   "directories": {
