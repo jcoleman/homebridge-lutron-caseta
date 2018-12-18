@@ -46,6 +46,7 @@
     "homebridge": ">=0.4.44"
   },
   "jest": {
-    "testRegex": "__tests__\\/.+_spec\\.jsx?$"
+    "testRegex": "__tests__\\/.+_spec\\.jsx?$",
+    "collectCoverage": true
   }
 }

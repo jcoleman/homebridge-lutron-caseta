@@ -7,3 +7,5 @@ notifications:
     on_failure: always
 before_script:
   - npm run build
+after_script:
+  - codecov
