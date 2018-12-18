@@ -1,15 +1,11 @@
-import {TestHelper} from './test_helper.js';
-import FakeServer  from './fake_server.js';
-import {FakeServerConnectionStates} from './fake_server.js';
-import net from 'net';
-import EventEmitter from 'events';
-import CasetaBridgeConnection from "../src/caseta_bridge_connection.js";
-import {CasetaBridgeConnectionStates} from "../src/caseta_bridge_connection.js";
-import LutronCasetaPlatform from "../src/lutron_caseta_platform.js";
-import LutronAccessory from "../src/lutron_accessory.js";
-import {API} from "homebridge";
-import {PlatformAccessory} from "homebridge/lib/platformAccessory.js";
-import * as UUID from "hap-nodejs/lib/util/uuid.js"
+// @ts-check
+const net = require("net");
+const { API } = require("homebridge");
+const { PlatformAccessory } = require("homebridge/lib/platformAccessory");
+const UUID = require("hap-nodejs/lib/util/uuid");
+const { FakeServer } = require("./fake-server");
+const { LutronCasetaPlatform } = require("../src/lutron-caseta-platform");
+const { LutronAccessory } = require("../src/lutron-accessory");
 
 describe("LutronCasetaPlatform", () => {
   let homebridge, platform;
@@ -19,9 +15,9 @@ describe("LutronCasetaPlatform", () => {
       {
         type: "PICO-REMOTE",
         integrationID: 2,
-        name: "test remote",
-      },
-    ],
+        name: "test remote"
+      }
+    ]
   };
 
   beforeEach(() => {
@@ -33,11 +29,11 @@ describe("LutronCasetaPlatform", () => {
 
     beforeEach(() => {
       connectMock = jest.fn((port, host) => {
-        return {on: jest.fn()};
+        return { on: jest.fn() };
       });
       jest.spyOn(net, "connect").mockImplementation(connectMock);
 
-      platform = new LutronCasetaPlatform(() => { }, baseConfig, homebridge);
+      platform = new LutronCasetaPlatform(() => {}, baseConfig, homebridge);
     });
 
     afterEach(() => {
@@ -45,11 +41,14 @@ describe("LutronCasetaPlatform", () => {
     });
 
     it("tracks an accessory from Homebridge's cache", () => {
-      const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+      const cachedPlatformAccessory = new PlatformAccessory(
+        "Display Name",
+        UUID.generate("bogus")
+      );
       cachedPlatformAccessory.context.config = {
         type: "PICO-REMOTE",
         integrationID: 2,
-        name: "test remote",
+        name: "test remote"
       };
 
       expect(platform.accessoriesByIntegrationID).toEqual({});
@@ -66,10 +65,10 @@ describe("LutronCasetaPlatform", () => {
 
       expect(platform.accessoriesByIntegrationID).toEqual({});
 
-      const accessoriesRegisteredPromise = new Promise((resolve) => {
-        homebridge.once("registerPlatformAccessories", (accessories) => {
+      const accessoriesRegisteredPromise = new Promise(resolve => {
+        homebridge.once("registerPlatformAccessories", accessories => {
           expect(accessories).toEqual([
-            platform.accessoriesByIntegrationID["2"].platformAccessory,
+            platform.accessoriesByIntegrationID["2"].platformAccessory
           ]);
           resolve();
         });
@@ -78,15 +77,20 @@ describe("LutronCasetaPlatform", () => {
       homebridge.emit("didFinishLaunching");
 
       expect(Object.keys(platform.accessoriesByIntegrationID)).toEqual(["2"]);
-      expect(platform.accessoriesByIntegrationID["2"]).toBeInstanceOf(LutronAccessory);
+      expect(platform.accessoriesByIntegrationID["2"]).toBeInstanceOf(
+        LutronAccessory
+      );
     });
 
     it("doesn't attempt to re-add cached accessories from config", () => {
-      const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+      const cachedPlatformAccessory = new PlatformAccessory(
+        "Display Name",
+        UUID.generate("bogus")
+      );
       cachedPlatformAccessory.context.config = {
         type: "PICO-REMOTE",
         integrationID: 2,
-        name: "test remote",
+        name: "test remote"
       };
       platform.configureAccessory(cachedPlatformAccessory);
 
@@ -98,17 +102,22 @@ describe("LutronCasetaPlatform", () => {
     });
 
     it("updates cached accessories from config", () => {
-      const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+      const cachedPlatformAccessory = new PlatformAccessory(
+        "Display Name",
+        UUID.generate("bogus")
+      );
       cachedPlatformAccessory.context.config = {
         type: "PICO-REMOTE",
         integrationID: 2,
-        name: "bogus",
+        name: "bogus"
       };
       platform.configureAccessory(cachedPlatformAccessory);
 
       homebridge.emit("didFinishLaunching");
 
-      expect(cachedPlatformAccessory.context.config.name).toEqual("test remote");
+      expect(cachedPlatformAccessory.context.config.name).toEqual(
+        "test remote"
+      );
     });
 
     describe("type = PICO-REMOTE", () => {
@@ -116,11 +125,12 @@ describe("LutronCasetaPlatform", () => {
       it("builds an accessory with stateless programmable switch services", () => {
         expect.assertions(1);
 
-        const accessoriesRegisteredPromise = new Promise((resolve) => {
-          homebridge.once("registerPlatformAccessories", (accessories) => {
+        const accessoriesRegisteredPromise = new Promise(resolve => {
+          homebridge.once("registerPlatformAccessories", accessories => {
             const accessory = platform.accessoriesByIntegrationID["2"];
             const switchServices = accessory.platformAccessory.services.filter(
-              s => s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
+              s =>
+                s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
             );
 
             expect(switchServices.length).toEqual(2);
@@ -135,22 +145,30 @@ describe("LutronCasetaPlatform", () => {
       });
 
       it("updates services on cached platform accessories", () => {
-        const cachedPlatformAccessory = new PlatformAccessory("Display Name", UUID.generate("bogus"));
+        const cachedPlatformAccessory = new PlatformAccessory(
+          "Display Name",
+          UUID.generate("bogus")
+        );
         cachedPlatformAccessory.context.config = {
           type: "PICO-REMOTE",
           integrationID: 2,
-          name: "bogus",
+          name: "bogus"
         };
-        const bogusService = new homebridge.hap.Service.StatelessProgrammableSwitch("Switch bogus", "2");
+        const bogusService = new homebridge.hap.Service.StatelessProgrammableSwitch(
+          "Switch bogus",
+          "2"
+        );
         cachedPlatformAccessory.addService(bogusService);
         platform.configureAccessory(cachedPlatformAccessory);
 
         homebridge.emit("didFinishLaunching");
 
         const accessory = platform.accessoriesByIntegrationID["2"];
-        const switchNames = accessory.platformAccessory.services.filter(
-          s => s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
-        ).map(s => s.displayName);
+        const switchNames = accessory.platformAccessory.services
+          .filter(
+            s => s instanceof homebridge.hap.Service.StatelessProgrammableSwitch
+          )
+          .map(s => s.displayName);
 
         expect(switchNames.length).toEqual(2);
         expect(switchNames).toEqual(["Switch 2", "Switch 4"]);
@@ -163,29 +181,31 @@ describe("LutronCasetaPlatform", () => {
     beforeEach(() => {
       const debug = false;
 
-      server = new FakeServer({debug: debug});
+      server = new FakeServer({ debug: debug });
 
-      server.listeningPromise.then((address) => {
-        const platformConfig = Object.assign(
-          {},
-          baseConfig,
-          {
-            bridgeConnection: {
-              host: address.address,
-              port: address.port,
-              debug: debug,
-            },
+      server.listeningPromise.then(address => {
+        const platformConfig = Object.assign({}, baseConfig, {
+          bridgeConnection: {
+            host: address.address,
+            port: address.port,
+            debug: debug
           }
+        });
+        platform = new LutronCasetaPlatform(
+          console.log,
+          platformConfig,
+          homebridge
         );
-        platform = new LutronCasetaPlatform(console.log, platformConfig, homebridge);
       });
 
-     const serverSocketSetup = server.connectionReceivedPromise.then((connection) => {
-        serverSocket = connection.socket;
-      });
+      const serverSocketSetup = server.connectionReceivedPromise.then(
+        connection => {
+          serverSocket = connection.socket;
+        }
+      );
 
       const bridgeSocketSetup = server.listeningPromise.then(() => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           platform.bridgeConnection.socket.once("connect", () => {
             resolve();
           });
@@ -195,7 +215,7 @@ describe("LutronCasetaPlatform", () => {
     });
 
     afterEach(() => {
-      const closePromise = new Promise((resolve) => {
+      const closePromise = new Promise(resolve => {
         server.netServer.once("close", resolve);
       });
       platform.bridgeConnection.socket.destroy();
@@ -209,8 +229,13 @@ describe("LutronCasetaPlatform", () => {
       homebridge.emit("didFinishLaunching");
 
       const accessory = platform.accessoriesByIntegrationID["2"];
-      const service = accessory.platformAccessory.getServiceByUUIDAndSubType(homebridge.hap.Service.StatelessProgrammableSwitch, "4");
-      const characteristic = service.getCharacteristic(homebridge.hap.Characteristic.ProgrammableSwitchEvent);
+      const service = accessory.platformAccessory.getServiceByUUIDAndSubType(
+        homebridge.hap.Service.StatelessProgrammableSwitch,
+        "4"
+      );
+      const characteristic = service.getCharacteristic(
+        homebridge.hap.Characteristic.ProgrammableSwitchEvent
+      );
 
       accessory._dispatchMonitorMessage = jest.fn();
 
@@ -218,9 +243,11 @@ describe("LutronCasetaPlatform", () => {
         serverSocket.write("~DEVICE,2,4,3");
       });
 
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         platform.bridgeConnection.on("monitorMessageReceived", () => {
-          expect(accessory._dispatchMonitorMessage.mock.calls).toEqual([[["4", "3"]]]);
+          expect(accessory._dispatchMonitorMessage.mock.calls).toEqual([
+            [["4", "3"]]
+          ]);
           resolve();
         });
       });

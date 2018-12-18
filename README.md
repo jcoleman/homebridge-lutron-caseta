@@ -28,7 +28,7 @@ However, the Smart Bridge Pro allows connections over telnet via the Lutron Inte
   - Send the “Integration Report” to yourself via email
   - Note the IP address assigned to your bridge in “Network Settings”
 
-4. Assign a static IP address to your bridge, matching the current IP address (noted in step 3).
+4. Configure your router to a static IP address to your bridge, matching the current IP address (noted in step 3).
 
 # Configuration
 
