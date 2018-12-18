@@ -24,9 +24,10 @@ However, the Smart Bridge Pro allows connections over telnet via the Lutron Inte
 2. Login and add devices (e.g. Pico remotes) using [the Lutron iOS app](https://itunes.apple.com/us/app/lutron-caséta-ra2-select-app/id886753021)
 
 3. In the Lutron app, press the gear in the top-left, then “Advanced” > “Integration”
-  - Enable “Telnet Support”
-  - Send the “Integration Report” to yourself via email
-  - Note the IP address assigned to your bridge in “Network Settings”
+
+- Enable “Telnet Support”
+- Send the “Integration Report” to yourself via email
+- Note the IP address assigned to your bridge in “Network Settings”
 
 4. Configure your router to a static IP address to your bridge, matching the current IP address (noted in step 3).
 
@@ -44,7 +45,9 @@ However, the Smart Bridge Pro allows connections over telnet via the Lutron Inte
   "accessories": [],
   "platforms": [{
     "platform": "LutronCasetaPlatform",
-    "bridgeConnection": "192.168.1.2"
+    "bridgeConnection": {
+      "host": "192.168.1.2"
+    }
   }]
 }
 ```
