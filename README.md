@@ -1,5 +1,7 @@
 # Homebridge Lutron Caséta
 
+[![Build Status](https://travis-ci.com/smockle/homebridge-lutron-caseta.svg?branch=master)](https://travis-ci.com/smockle/homebridge-lutron-caseta)
+
 A fork of [jcoleman/homebridge-lutron-caseta](https://github.com/jcoleman/homebridge-lutron-caseta)
 
 tl;dr: A Homebridge plugin for integration with the Lutron Caséta SmartBridge Pro.
