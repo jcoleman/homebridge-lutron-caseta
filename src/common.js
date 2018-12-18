@@ -1,5 +1,5 @@
 // @ts-check
 module.exports = {
-  PluginName: "@smockle/homebridge-lutron-caseta",
+  PluginName: "homebridge-lutron-caseta-smockle",
   PlatformName: "LutronCasetaPlatform"
 };

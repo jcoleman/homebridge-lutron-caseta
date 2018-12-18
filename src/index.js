@@ -3,7 +3,7 @@ const { LutronCasetaPlatform } = require("./lutron-caseta-platform");
 const { PluginName, PlatformName } = require("./common");
 let Accessory, Service, Characteristic, UUIDGen;
 
-export default function(homebridge) {
+module.exports = function (homebridge) {
   Accessory = homebridge.platformAccessory;
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;

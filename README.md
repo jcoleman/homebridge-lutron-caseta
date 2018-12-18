@@ -47,7 +47,19 @@ However, the Smart Bridge Pro allows connections over telnet via the Lutron Inte
     "platform": "LutronCasetaPlatform",
     "bridgeConnection": {
       "host": "192.168.1.2"
-    }
+    },
+    "accessories": []
   }]
 }
+```
+
+# Debugging
+
+Review the [Plugin Development](https://github.com/nfarina/homebridge#plugin-development) section of the Homebridge README.
+
+```Bash
+cp /var/lib/homebridge-lutron/config.json ~/.homebridge-dev
+cd ~/Developer && git clone https://github.com/smockle/homebridge-lutron-caseta
+cd ~
+DEBUG=* ~/.npm-global/bin/homebridge -D -U ~/.homebridge-dev -P ~/Developer/homebridge-lutron-caseta/
 ```
