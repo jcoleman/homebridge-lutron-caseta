@@ -2,7 +2,7 @@
 
 A fork of [jcoleman/homebridge-lutron-caseta](https://github.com/jcoleman/homebridge-lutron-caseta)
 
-tl;dr: A Homebridge plugin for integration with the Lutron Caséta Smart Bridge Pro.
+tl;dr: A Homebridge plugin for integration with the Lutron Caséta SmartBridge Pro.
 
 Primary motivation:
 
