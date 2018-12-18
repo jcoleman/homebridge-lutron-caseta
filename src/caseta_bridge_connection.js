@@ -33,6 +33,9 @@ class CasetaBridgeConnection extends EventEmitter {
     this.socket.on('data', (data) => {
       this.receiveData(data);
     });
+    this.socket.on('error', (error) => {
+      throw error;
+    });
     this.socket.on('end', () => {
       // TODO
     });
