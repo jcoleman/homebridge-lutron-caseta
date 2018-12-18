@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "test": "jest"
+    "test": "jest",
+    "_version": "bash scripts/version.sh"
   },
   "repository": {
     "type": "git",
