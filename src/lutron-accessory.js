@@ -4,12 +4,18 @@ const ButtonState = {
   BUTTON_UP: "4"
 };
 
+const ButtonMap = {
+  "PICO-REMOTE": ["2", "4"],
+  "PJ2-2B": ["2", "4"],
+  "PJ2-3BRL": ["2", "4", "5", "6", "3"]
+}
+
 class LutronAccessory {
   static accessoryForType(type, log, platformAccessory, api) {
-    if (type !== "PICO-REMOTE") {
+    if (!Object.keys(ButtonMap).includes(type)) {
       log(`Unknown accessory type: ${type}`);
     }
-    return new LutronPicoRemoteAccessory(log, platformAccessory, api);
+    return new LutronPicoRemoteAccessory(ButtonMap[type], log, platformAccessory, api);
   }
 
   constructor(log, platformAccessory, api) {
@@ -22,12 +28,12 @@ class LutronAccessory {
 }
 
 class LutronPicoRemoteAccessory extends LutronAccessory {
-  constructor(log, platformAccessory, api) {
+  constructor(buttons, log, platformAccessory, api) {
     super(log, platformAccessory, api);
 
     const StatelessProgrammableSwitch = this.homebridgeAPI.hap.Service
       .StatelessProgrammableSwitch;
-    this.switchServicesByButtonNumber = ["2", "4"].reduce((acc, number) => {
+    this.switchServicesByButtonNumber = buttons.reduce((acc, number) => {
       const displayName = `Switch ${number}`;
 
       let existingService = this.platformAccessory.getServiceByUUIDAndSubType(

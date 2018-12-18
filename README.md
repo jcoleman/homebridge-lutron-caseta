@@ -49,9 +49,17 @@ However, the Smart Bridge Pro allows connections over telnet via the Lutron Inte
       "host": "192.168.1.2"
     },
     "accessories": [{
-      "name": "Pico",
-      "type": "PICO-REMOTE",
+      "name": "FiveButtonRemote1",
+      "type": "PJ2-3BRL",
       "integrationID": 2
+    }, {
+      "name": "TwoButtonRemote1",
+      "type": "PJ2-2B",
+      "integrationID": 3,
+    }, {
+      "name": "CompatibleTwoButtonRemote",
+      "type": "PICO-REMOTE",
+      "integrationID": 4
     }]
   }]
 }
