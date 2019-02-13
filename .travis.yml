@@ -4,7 +4,7 @@ node_js:
 notifications:
   email:
     on_success: change
-    on_failure: always
+    on_failure: change
 script:
   - npm test
   - codecov
