@@ -23,7 +23,12 @@ class LutronCasetaPlatform {
     this.bridgeConnection.on(
       ConnectionEvent.MonitorMessageReceived,
       (integrationID, commandFields) => {
-        this._dispatchMonitorMessage(integrationID, commandFields);
+        if (
+          this.accessoriesByIntegrationID &&
+          this.accessoriesByIntegrationID[integrationID]
+        ) {
+          this._dispatchMonitorMessage(integrationID, commandFields);
+        }
       }
     );
 
