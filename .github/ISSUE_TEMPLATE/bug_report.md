@@ -7,6 +7,9 @@ assignees: smockle
 
 ---
 
-**Context**
-* Which version of Node.js are you using? (`node --version`)
-* Which version of the plugin do you have installed? (`npm ls -g --depth=0 | grep homebridge-lutron-caseta-smockle`)
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**System information**
+- Node.js version (`node --version`): 
+- Plugin version (`npm ls -g --depth=0 | grep homebridge-lutron-caseta-smockle`):
