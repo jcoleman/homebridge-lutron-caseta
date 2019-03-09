@@ -7,9 +7,10 @@ assignees: smockle
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+Describe the bug. Please include log output and steps to reproduce.
 
-**System information**
-- Node.js version (`node --version`): 
-- Plugin version (`npm ls -g --depth=0 | grep homebridge-lutron-caseta-smockle`):
+**Node.js version:**
+`node --version`
+
+**Plugin version:**
+`npm ls -g --depth=0 | grep homebridge-lutron-caseta-smockle`
