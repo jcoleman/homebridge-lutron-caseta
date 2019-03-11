@@ -62,7 +62,7 @@ This project was originally published to the npm registry as [`@smockle/homebrid
     }, {
       "name": "TwoButtonRemote1",
       "type": "PJ2-2B",
-      "integrationID": 3,
+      "integrationID": 3
     }, {
       "name": "CompatibleTwoButtonRemote",
       "type": "PICO-REMOTE",
