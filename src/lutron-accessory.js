@@ -7,6 +7,7 @@ const ButtonState = {
 const ButtonMap = {
   "PICO-REMOTE": ["2", "4"],
   "PJ2-2B": ["2", "4"],
+  "PJ2-3B": ["2", "3", "4"],
   "PJ2-3BRL": ["2", "4", "5", "6", "3"]
 }
 
