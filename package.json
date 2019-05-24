@@ -30,7 +30,7 @@
   "homepage": "https://github.com/smockle/homebridge-lutron-caseta#readme",
   "devDependencies": {
     "codecov": "^3.1.0",
-    "jest": "^23.0"
+    "jest": "^24.8"
   },
   "engines": {
     "homebridge": ">=0.4.44",
