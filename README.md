@@ -3,7 +3,6 @@
 [![npm](https://img.shields.io/npm/v/homebridge-lutron-caseta-smockle.svg)](https://www.npmjs.com/package/homebridge-lutron-caseta-smockle)
 [![Build Status](https://travis-ci.com/smockle/homebridge-lutron-caseta.svg?branch=master)](https://travis-ci.com/smockle/homebridge-lutron-caseta)
 [![codecov](https://codecov.io/gh/smockle/homebridge-lutron-caseta/branch/master/graph/badge.svg)](https://codecov.io/gh/smockle/homebridge-lutron-caseta)
-[![Known Vulnerabilities](https://snyk.io/test/github/smockle/homebridge-lutron-caseta/badge.svg?targetFile=package.json)](https://snyk.io/test/github/smockle/homebridge-lutron-caseta?targetFile=package.json)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=smockle/homebridge-lutron-caseta)](https://dependabot.com)
 
 This is a fork of [jcoleman/homebridge-lutron-caseta](https://github.com/jcoleman/homebridge-lutron-caseta), a Homebridge plugin for integration with the Lutron Caséta Smart Bridge Pro.
@@ -94,6 +93,6 @@ DEBUG=* ~/.npm-global/bin/homebridge -D -U ~/.homebridge-dev -P ~/Developer/home
 
 # Disclaimer
 
-Caséta, Clear Connect, Lutron and Pico are trademarks of Lutron Electronics Co., Inc., registered in the U.S. and other countries.
+Caséta, Clear Connect, Lutron and Pico are trademarks of Lutron Electronics Co., Inc., registered in the U.S. and other countries.
 
 This project is in no way affiliated with, authorized, maintained, sponsored or endorsed by Lutron Electronics, Co., Inc., or any of its affiliates or subsidiaries.
