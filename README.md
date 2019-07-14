@@ -7,6 +7,9 @@
 
 This is a fork of [jcoleman/homebridge-lutron-caseta](https://github.com/jcoleman/homebridge-lutron-caseta), a Homebridge plugin for integration with the Lutron Caséta Smart Bridge Pro.
 
+# Update 2019-06-14
+**I don’t use Lutron Caséta switches or remotes anymore, and I’m unlikely to undertake any new development on this plugin in the near future.** For now, new patch versions will continue to be published automatically when this plugin’s depedencies are updated. Please open an issue if you are interested in maintaining this plugin.
+
 # Motivation
 
 Lutron doesn’t expose its versatile Pico remotes as HomeKit accessories, so it’s not possible to use them to control non-Lutron accessories.
